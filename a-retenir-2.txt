@@ -1,0 +1,159 @@
+generally used moddlewares
+
+app.use(=>)
+runs code on every single request
+
+app.use(express.static)---------->use static files
+app.use(express.json()) parse the body into json 
+app.use(express.urlencoded()) special url fonctions 
+
+
+morgan well knowns middleware
+app.use(moragen("tiny"))----->logs requests
+
+ 
+res.send() in app.use() is a brake middleware 
+everything stops 
+to execute next middleware
+
+app.use((req,res,next)=>{
+    console.log
+    next()
+})
+and we could do this and it would continu whilematching with directories
+app.use((req,res,next)=>{
+    console.log
+    next()
+})
+app.use((req,res,next)=>{
+    console.log
+    next()
+})
+app.use((req,res,next)=>{
+    console.log
+    next()
+})
+it would execute the 3 request"middleware"
+if we execute right after next()
+a thing it would still run 
+app.use((req,res,next)=>{
+    console.log
+    next()
+    console.log
+})
+here we will have the 2nd console.log and it executes after next() finishes*
+
+to make sure nothing happes after next()
+we do return next()
+
+
+
+---
+req.method get put
+req.path /products
+req.query access quuery
+
+if we define request.requestTime in a request 
+than if we do next()
+we have access to it in the requests after
+--------
+to do the error response 
+we do app.use((req,res)=>{
+    res.status(404).sennd("NOT found)
+
+})
+
+the status will be visible in the network and the console
+in the fin
+
+// authentification
+
+
+app.use((req,res,next)=>{
+    const {password}=req.query
+    if(password===){
+        next()
+
+    }else{
+        res.send("sorry you need password")
+
+    }
+
+    
+})
+
+one of the best methods is oingg insteas of app.use 
+a functio with next and something to break it like res.send and then in an app.get for example , it takes many callbacks , we put there the function and the  function that we want to execute right after 
+so instead of following same root
+we can just define a function equivalent to app.use
+and then put it as a callback in a request
+
+
+
+--------------ejs engine
+ 
+const ejsMate=require("ejs-mate");
+app.ejsMate("ejs",ejsMate)
+ 
+ must to do body     <%-body %>
+ in layout file
+
+ <% layout("layouts/boilerplate") %>
+ this makes requests that the output of the ejs file be passed to the given view as body 
+ it doesn t replace the body there is still this 
+ <body>
+    
+    <h1>before</h1>
+    <%-body %>
+    <h1>after</h1>
+</body>
+
+
+
+modifying this <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary"> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+
+    lets the navbar become dark
+
+
+adding in the class sticky-top
+makes it stick while scrolling
+
+
+to include partials we just write in the boilerplate
+<body>
+<%- include("../partials/navbar")  %>
+and then in directory we paste the raw html
+
+
+
+--------bootstrap
+<footer class="footer bg-dark">
+    <div class="container">
+    
+bg dark background bg
+container the format of a container
+
+padding top and botton py 
+top pt 
+botton pb
+
+text-muted a class that lets the text be muted
+
+copy right symbol (&copy;)
+
+bootstrap class
+d-flex flex-column vh-100
+d display
+vh view heights be at least 100 vh
+
+mt margtop auto , ms "side" auto takes the free space in a flexbox
+
+
+align self one thing acress axis not main(across)
+
+align itemps (everything to the left or right)
+
+justify content affects everything
+justfy content flex end makes everything drop
+to move one thing in the main axis we use margin top auto,margin left auto

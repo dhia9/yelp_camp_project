@@ -1,0 +1,153 @@
+------useful terminal commands
+
+
+PS C:\Users\USER\OneDrive - INSA Lyon\Bureau\coursbootcamp\projet_CAMP\copy_camp> Move-Item copy_camp.txt ..
+
+
+PS C:\Users\USER\OneDrive - INSA Lyon\Bureau\coursbootcamp\projet_CAMP\copy_camp> Rename-Item index.js app.js
+
+
+
+---a retenir initial code
+
+const mongoose=require('mongoose');
+const Schema=mongoose.Schema;
+
+
+const CampgroundSchema=new Schema({
+    title:String,
+    price:String,
+    description:String,
+    location:String
+})
+
+
+----creating module in a seperate js file in a directory generally modules
+
+
+
+-base code 
+const express=require("express");
+const app=express() 
+const path=require("path")
+const mongoose=require('mongoose');
+
+
+mongoose.connect('mongodb://localhost:27017/yelp-camp')
+    // .then(()=>console.log("connected"))
+    // .catch((err)=>console.log("oh no error",err))
+const db=mongoose.connection ;
+db.on("error",console.error.bind(console,"connection error:"))
+db.once("open",()=>{
+    console.log('Database connected')
+})
+app.set("view engine","ejs")
+app.set("views",path.join(__dirname,"views"))
+
+
+app.get("/",(req,res)=>{
+    res.render("home")
+
+})
+
+app.listen(3000,(req,res)=>{
+    console.log("connected  ")
+})
+
+
+
+------to import the module file for the module
+
+const Campground=require('./models/campground')
+app.get("/makecampground",async(req,res)=>{
+    const camp=new Campground({title:"My Backyard",description:"cheep camping"});
+    await camp.save();
+    res.send(camp) ;
+})
+
+###
+
+"""in the file we did this
+const mongoose=require('mongoose');
+const Schema=mongoose.Schema;
+
+
+const CampgroundSchema=new Schema({
+    title:String,
+    price:String,
+    description:String,
+    location:String
+})
+
+
+module.exports=mongoose.model("Campground",CampgroundSchema)
+
+
+---add property to exported module
+
+module.exports.descriptors = [
+    'Forest',
+    'Ancient',
+    'Diamond'
+]
+
+module.exports.places = [
+    'Flats',
+    'Village',
+    'Canyon',
+
+]
+
+
+
+------close a connection in a terminal
+
+mongoose.connection.close();
+
+
+----req.body in post request is by default empty 
+
+to read it mst use 
+
+app.use(express.urlencoded({extended:true}))
+
+to return a body in this stucture 
+
+
+{
+  "campground": {
+    "title": "csdscqscs",
+    "Location": "sdqscqcsd"
+  }
+}
+
+
+<form action="/campgrounds" method="POST">
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="campground[title]">
+        </div>
+        <div>
+            <label for="Location">Location</label>
+            <input type="text" id="Location" name="campground[Location]">
+        </div>
+
+        in name usee campground[Location]
+
+---------after defining a model we can view its id
+
+const campground=new Campground(req.body.campground)
+    campground.save()
+    res.redirect(`/campgrounds${campground._id}`)
+
+--tod do putch put methods 
+
+
+const methodOverride=require("method-override")
+app.use(methodOverride("_method"))
+
+
+
+-----
+method mus be post to do delete put patch 
+<form action="/campgrounds/<%=campground._id%>?_method=DELETE" method="POST">
